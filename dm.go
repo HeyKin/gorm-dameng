@@ -112,45 +112,47 @@ func (d Dialector) QuoteTo(writer clause.Writer, str string) {
 		shiftDelimiter          int8
 	)
 
-	for _, v := range []byte(str) {
-		switch v {
-		case '"':
-			continuousBacktick++
-			if continuousBacktick == 2 {
-				_, _ = writer.WriteString(`""`)
-				continuousBacktick = 0
-			}
-		case '.':
-			if continuousBacktick > 0 || !selfQuoted {
-				shiftDelimiter = 0
-				underQuoted = false
-				continuousBacktick = 0
-				_ = writer.WriteByte('"')
-			}
-			_ = writer.WriteByte(v)
-			continue
-		default:
-			if shiftDelimiter-continuousBacktick <= 0 && !underQuoted {
-				_ = writer.WriteByte('"')
-				underQuoted = true
-				if selfQuoted = continuousBacktick > 0; selfQuoted {
-					continuousBacktick -= 1
-				}
-			}
+	_, _ = writer.WriteString(str)
+	// 注释掉添加引号部分
+	// for _, v := range []byte(str) {
+	// 	switch v {
+	// 	case '"':
+	// 		continuousBacktick++
+	// 		if continuousBacktick == 2 {
+	// 			_, _ = writer.WriteString(`""`)
+	// 			continuousBacktick = 0
+	// 		}
+	// 	case '.':
+	// 		if continuousBacktick > 0 || !selfQuoted {
+	// 			shiftDelimiter = 0
+	// 			underQuoted = false
+	// 			continuousBacktick = 0
+	// 			_ = writer.WriteByte('"')
+	// 		}
+	// 		_ = writer.WriteByte(v)
+	// 		continue
+	// 	default:
+	// 		if shiftDelimiter-continuousBacktick <= 0 && !underQuoted {
+	// 			_ = writer.WriteByte('"')
+	// 			underQuoted = true
+	// 			if selfQuoted = continuousBacktick > 0; selfQuoted {
+	// 				continuousBacktick -= 1
+	// 			}
+	// 		}
 
-			for ; continuousBacktick > 0; continuousBacktick -= 1 {
-				_, _ = writer.WriteString(`""`)
-			}
+	// 		for ; continuousBacktick > 0; continuousBacktick -= 1 {
+	// 			_, _ = writer.WriteString(`""`)
+	// 		}
 
-			_ = writer.WriteByte(v)
-		}
-		shiftDelimiter++
-	}
+	// 		_ = writer.WriteByte(v)
+	// 	}
+	// 	shiftDelimiter++
+	// }
 
-	if continuousBacktick > 0 && !selfQuoted {
-		_, _ = writer.WriteString(`""`)
-	}
-	_ = writer.WriteByte('"')
+	// if continuousBacktick > 0 && !selfQuoted {
+	// 	_, _ = writer.WriteString(`""`)
+	// }
+	// _ = writer.WriteByte('"')
 }
 
 func (d Dialector) Explain(sql string, vars ...interface{}) string {
