@@ -106,11 +106,11 @@ func (d Dialector) BindVarTo(writer clause.Writer, _ *gorm.Statement, _ interfac
 }
 
 func (d Dialector) QuoteTo(writer clause.Writer, str string) {
-	var (
-		underQuoted, selfQuoted bool
-		continuousBacktick      int8
-		shiftDelimiter          int8
-	)
+	//var (
+	//	underQuoted, selfQuoted bool
+	//	continuousBacktick      int8
+	//	shiftDelimiter          int8
+	//)
 
 	_, _ = writer.WriteString(str)
 	// 注释掉添加引号部分
