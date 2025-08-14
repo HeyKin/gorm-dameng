@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/godoes/gorm-dameng/dm8/util"
+	"github.com/HeyKin/gorm-dameng/dm8/util"
 )
 
 type logFilter struct{}
