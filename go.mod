@@ -1,4 +1,4 @@
-module github.com/godoes/gorm-dameng
+module github.com/HeyKin/gorm-dameng
 
 go 1.20
 
